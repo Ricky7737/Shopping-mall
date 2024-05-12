@@ -17,14 +17,12 @@ public class ProductController {
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId) {
-        // 取得商品數據
         Product product = productService.getProductById(productId);
-        // 回傳商品數據
-        // != null 就是商品有存在，回傳 200 OK，null 就是商品不存在，回傳 404 NOT_FOUND
+
         if (product != null) {
             return ResponseEntity.status(HttpStatus.OK).body(product);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
