@@ -1,11 +1,15 @@
 package com.abao.shoppingmall.Model;
 
+import com.abao.shoppingmall.constant.ProductCategory;
+
 import java.util.Date;
 
 public class Product {
     private  Integer productId;
     private  String productName;
-    private  String category;
+    // 單存這樣寫就無法知道 category 底下有哪些
+    // 可以透過右鍵 Refactor -> Type Migration 來轉換成 enum
+    private ProductCategory category;
     private  String imageUrl;
     private Integer price;
     private Integer stock;
@@ -16,7 +20,7 @@ public class Product {
     public Product() {}
     // 帶參數構造
 
-    public Product(Integer productId, String productName, String category, String imageUrl, Integer price, Integer stock, String description, Date craetedDate, Date lastModifiedDate) {
+    public Product(Integer productId, String productName, ProductCategory category, String imageUrl, Integer price, Integer stock, String description, Date craetedDate, Date lastModifiedDate) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -46,11 +50,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 

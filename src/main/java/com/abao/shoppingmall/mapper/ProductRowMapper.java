@@ -1,6 +1,7 @@
 package com.abao.shoppingmall.mapper;
 
 import com.abao.shoppingmall.Model.Product;
+import com.abao.shoppingmall.constant.ProductCategory;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -18,7 +19,12 @@ public class ProductRowMapper implements RowMapper<Product> {
 
         product.setProductId(rs.getInt("product_id"));
         product.setProductName(rs.getString("product_name"));
-        product.setCategory(rs.getString("category"));
+
+        // 這邊因為 Product 物件裡面有 category 屬性，所以要把查詢到的 category 資料存進去
+        // String 轉換成 Enum 類型，透過 Enum 的 valueOf() 方法
+        // 然後接住資料庫的資料，存進 Product 物件裡面
+        product.setCategory(ProductCategory.valueOf(rs.getString("category")));
+
         product.setImageUrl(rs.getString("image_url"));
         product.setPrice(rs.getInt("price"));
         product.setStock(rs.getInt("stock"));
