@@ -1,13 +1,18 @@
 package com.abao.shoppingmall.Dao.Impl;
 
 import com.abao.shoppingmall.Dao.ProductDao;
+import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.mapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,5 +44,38 @@ public class ProductDaoImpl implements ProductDao {
         } else {
             return null;
         }
+    }
+
+    // 新增商品到資料庫
+    @Override
+    public Integer createProduct(ProductRequest productRequest) {
+        String sql = "INSERT INTO product(product_name, category, image_url, price, stock, " +
+                "description, created_date, last_modified_date) " +
+                "VALUES (:productName, :category, :imageUrl, :price, :stock, :description, " +
+                ":createdDate, :lastModifiedDate)";
+
+        // 建立 Map 物件，用來存放參數
+        Map<String, Object> map = new HashMap<>();
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imageUrl", productRequest.getImageUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+
+        // 添加時間
+        Date now = new Date();
+        map.put("createdDate", now);
+        map.put("lastModifiedDate", now);
+
+        // 使用 KeyHolder 自動生成產生的產品 ID，存入資料庫
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        // JDBC 存入資料庫
+        // MapSqlParameterSource 用來將 Map 物件轉換成 SQL 參數
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
+
+        int productId = keyHolder.getKey().intValue();
+        return productId;
     }
 }
