@@ -14,6 +14,8 @@ public class Product {
     private Integer price;
     private Integer stock;
     private String description;
+
+    // Date 預設時間是英國時間，要改成台灣時間要加上 +8 小時
     private Date craetedDate;
     private Date lastModifiedDate;
 
