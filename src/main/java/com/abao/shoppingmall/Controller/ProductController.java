@@ -6,21 +6,24 @@ import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.ProductService;
 import com.abao.shoppingmall.constant.ProductCategory;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated //這樣才能啟用 Max 與 Min 這兩個驗證參數功能
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    // 這邊是查詢所有商品，並且回傳 List<Product>
-    // 而且他返回是要一個 List，getProducts 表示回傳多個商品
+    // 透過 List<Product> 取得查詢的多個商品
     // 這邊還要加入查詢商品分類功能，透過 @RequestParam ProductCategory category 來取得分類名稱
     @GetMapping("/products") // 取的資料對應的是 Get 方法
     public ResponseEntity<List<Product>> getProducts(
@@ -34,7 +37,13 @@ public class ProductController {
             // orderBy 根據甚麼欄位來排序，預設為 created_date 最新的
             @RequestParam(defaultValue = "created_date") String orderBy,
             // sort 排序方式，升續或降序，這邊預設 desc 降序
-            @RequestParam(defaultValue = "desc") String sort) {
+            @RequestParam(defaultValue = "desc") String sort,
+
+            // 分頁功能
+            // limit 表示一次取得幾筆資料，對應SQL 的 LIMIT 參數，最大取得不可以超過 1000 筆，最小為 0不可以是負數
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            // offset 表示跳過多少筆數據，對應SQL 的 OFFSET 參數，這邊預設從第一筆開始，OFFSET 最小為 0
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset) {
 
         // 透過 productQuertParams 物件來存放查詢的參數，並且傳入 productService 的 getProducts 方法。
         ProductQueryParams productQuertParams = new ProductQueryParams();
@@ -42,6 +51,8 @@ public class ProductController {
         productQuertParams.setSearch(search);
         productQuertParams.setOrderBy(orderBy);
         productQuertParams.setSort(sort);
+        productQuertParams.setLimit(limit);
+        productQuertParams.setOffset(offset);
 
         // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
         List<Product> productsList = productService.getProducts(productQuertParams);

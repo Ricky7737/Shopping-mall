@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
                 "created_date, last_modified_date " +
                 "FROM product WHERE 1=1";
 
-        // 執行查詢，取得商品列表
+        /*---執行查詢，取得商品列表---*/
         Map<String, Object> map = new HashMap<>();  // 建立空的Map物件
         // 如果 category 參數不是空，就加入查詢條件
         if (productQueryParams.getCategory() != null) {
@@ -51,9 +51,16 @@ public class ProductDaoImpl implements ProductDao {
             map.put("search", "%" + productQueryParams.getSearch() + "%");
         }
 
-        // 排序條件，這邊透過字串拼接的方式，將 order_by 和 sort 參數拼接到 SQL 語法中
+        /*---排序條件---*/
+        // 這邊透過字串拼接的方式，將 order_by 和 sort 參數拼接到 SQL 語法中
         // 這邊有在 ProductController 加入預設條件，所以不用在這邊判斷是否有排序條件
         sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+
+        /* ---分頁查詢---*/
+        // 這邊透過 offset 和 limit 參數，將查詢結果限制在一個區間內
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", productQueryParams.getLimit());
+        map.put("offset", productQueryParams.getOffset());
 
         // 根據 RowMapper 將查詢結果轉換成 Product 物件
         List<Product> products = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
