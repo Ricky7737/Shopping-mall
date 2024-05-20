@@ -24,15 +24,24 @@ public class ProductController {
     // 這邊還要加入查詢商品分類功能，透過 @RequestParam ProductCategory category 來取得分類名稱
     @GetMapping("/products") // 取的資料對應的是 Get 方法
     public ResponseEntity<List<Product>> getProducts(
-            // (required = false) 表示這個參數是可選的，不一定要帶入)
+            // 查詢條件
+            // category 透過商品分類查詢商品
             @RequestParam(required = false) ProductCategory category,
-            // 透過關鍵字搜尋商品，並且回傳 List<Product>
-            @RequestParam(required = false) String search) {
+            // search 透過商品名稱查詢商品
+            @RequestParam(required = false) String search,
+
+            // 排序功能
+            // orderBy 根據甚麼欄位來排序，預設為 created_date 最新的
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            // sort 排序方式，升續或降序，這邊預設 desc 降序
+            @RequestParam(defaultValue = "desc") String sort) {
 
         // 透過 productQuertParams 物件來存放查詢的參數，並且傳入 productService 的 getProducts 方法。
         ProductQueryParams productQuertParams = new ProductQueryParams();
         productQuertParams.setCategory(category);
         productQuertParams.setSearch(search);
+        productQuertParams.setOrderBy(orderBy);
+        productQuertParams.setSort(sort);
 
         // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
         List<Product> productsList = productService.getProducts(productQuertParams);

@@ -51,6 +51,10 @@ public class ProductDaoImpl implements ProductDao {
             map.put("search", "%" + productQueryParams.getSearch() + "%");
         }
 
+        // 排序條件，這邊透過字串拼接的方式，將 order_by 和 sort 參數拼接到 SQL 語法中
+        // 這邊有在 ProductController 加入預設條件，所以不用在這邊判斷是否有排序條件
+        sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+
         // 根據 RowMapper 將查詢結果轉換成 Product 物件
         List<Product> products = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return products;
