@@ -3,6 +3,7 @@ package com.abao.shoppingmall.Controller;
 import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.ProductService;
+import com.abao.shoppingmall.constant.ProductCategory;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,18 @@ public class ProductController {
     private ProductService productService;
 
     // 這邊是查詢所有商品，並且回傳 List<Product>
-    // 而且他返回是要一個 List
-    // getProducts 表示回傳多個商品
+    // 而且他返回是要一個 List，getProducts 表示回傳多個商品
+    // 這邊還要加入查詢商品分類功能，透過 @RequestParam ProductCategory category 來取得分類名稱
     @GetMapping("/products") // 取的資料對應的是 Get 方法
-    public ResponseEntity<List<Product>> getProducts() {
-        // List<Product> 所有商品的 List
-        List<Product> products = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+            // (required = false) 表示這個參數是可選的，不一定要帶入)
+            @RequestParam(required = false) ProductCategory category) {
+
+        // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
+        // 把 categoty 傳入 productService 的 getProducts 方法，取得商品資料。
+        List<Product> productsList = productService.getProducts(category);
         // 不管有沒有商品，都回傳 HTTP 200 狀態碼與商品資料。
-        return ResponseEntity.status(HttpStatus.OK).body(products);
+        return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }
 
     // 這邊是查詢單個商品

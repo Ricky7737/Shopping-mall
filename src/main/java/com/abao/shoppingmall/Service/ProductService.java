@@ -2,13 +2,14 @@ package com.abao.shoppingmall.Service;
 
 import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
+import com.abao.shoppingmall.constant.ProductCategory;
 
 import java.util.List;
 
 public interface ProductService {
 
     // 定義 getProducts 方法，取得所有商品資訊
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category);
     // 透過 productId 取得單個商品資訊
     Product getProductById(Integer productId);
 
