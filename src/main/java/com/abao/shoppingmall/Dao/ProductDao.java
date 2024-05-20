@@ -11,4 +11,6 @@ public interface ProductDao {
     Integer createProduct(ProductRequest productRequest);
     // 定義一個 updateProduct，用來更新 product 表格的資料
     void updateProduct(Integer productId, ProductRequest productRequest);
+    // 定義一個 deleteProductById，用來刪除 product 表格的資料
+    void deleteProductById(Integer productId);
 }

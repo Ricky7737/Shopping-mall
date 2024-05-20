@@ -70,6 +70,16 @@ public class ProductController {
         // 回傳 200 OK，在 body 回傳更新後的商品資料。
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }
+
+    // 刪除商品功能，指定 id
+    @DeleteMapping("/products/{productId}") // 刪除資料對應的是 DELETE 方法
+    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+        // 對於前端來說只在意有沒有把商品刪除，所以不用在加入判斷商品是否存在的程式碼。
+        // 刪除商品功能，參數為 productId，表示指定商品然後刪除商品資料。
+        productService.deleteProductById(productId);
+        // 回傳 204 No Content 表示刪除成功，但不回傳任何資料。
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
 
 

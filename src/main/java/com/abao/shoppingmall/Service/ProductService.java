@@ -10,4 +10,6 @@ public interface ProductService {
     Integer createProduct(ProductRequest productRequest);
     // 定義 updateProduct 方法，更新商品資訊，ProductRequest 是前端傳進來的參數
     void updateProduct(Integer productId, ProductRequest productRequest);
+    // 定義 deleteProductById 方法，刪除商品資訊
+    void deleteProductById(Integer productId);
 }
