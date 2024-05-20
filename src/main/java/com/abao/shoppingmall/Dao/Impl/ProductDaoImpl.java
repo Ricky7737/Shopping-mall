@@ -29,18 +29,25 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     // 取得所有商品
     // WHERE 1=1 表示不篩選任何條件，可以拼接多個條件
-    public List<Product> getProducts(ProductCategory category) {
+    public List<Product> getProducts(ProductCategory category, String search) {
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, " +
                 "created_date, last_modified_date " +
                 "FROM product WHERE 1=1";
 
         // 執行查詢，取得商品列表
         Map<String, Object> map = new HashMap<>();  // 建立空的Map物件
-        // 如果 category 不是空，就加入查詢條件
+        // 如果 category 參數不是空，就加入查詢條件
         if (category != null) {
             sql = sql + " AND category = :category"; // 這邊主要讓查詢條件拼接在 WHERE 後面
             // category 是 Enum 型態，透過 .name() 取得字串值
             map.put("category", category.name());
+        }
+
+        // 如果 search 參數不是空，就加入查詢條件
+        if (search != null) {
+            sql = sql + " AND product_name LIKE :search";
+            // 將 search 加上 % 作為模糊查詢
+            map.put("search", "%" + search + "%");
         }
 
         // 根據 RowMapper 將查詢結果轉換成 Product 物件

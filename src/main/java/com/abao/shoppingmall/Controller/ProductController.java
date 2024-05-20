@@ -24,11 +24,14 @@ public class ProductController {
     @GetMapping("/products") // 取的資料對應的是 Get 方法
     public ResponseEntity<List<Product>> getProducts(
             // (required = false) 表示這個參數是可選的，不一定要帶入)
-            @RequestParam(required = false) ProductCategory category) {
+            @RequestParam(required = false) ProductCategory category,
+            // 透過關鍵字搜尋商品，並且回傳 List<Product>
+            @RequestParam(required = false) String search) {
 
         // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
         // 把 categoty 傳入 productService 的 getProducts 方法，取得商品資料。
-        List<Product> productsList = productService.getProducts(category);
+        // 傳入 search 參數，表示要搜尋的關鍵字，傳進 Dao
+        List<Product> productsList = productService.getProducts(category, search);
         // 不管有沒有商品，都回傳 HTTP 200 狀態碼與商品資料。
         return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }

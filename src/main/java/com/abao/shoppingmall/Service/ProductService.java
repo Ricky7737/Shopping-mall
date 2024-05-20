@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductService {
 
     // 定義 getProducts 方法，取得所有商品資訊
-    List<Product> getProducts(ProductCategory category);
+    List<Product> getProducts(ProductCategory category, String search);
     // 透過 productId 取得單個商品資訊
     Product getProductById(Integer productId);
 
