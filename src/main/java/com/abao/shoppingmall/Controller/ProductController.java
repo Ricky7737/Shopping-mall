@@ -17,10 +17,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // 查詢商品列表，會返回一個 List，存放商品數據，會還傳所有商品的資料，對應的是 Get 方法
-    //@GetMapping("/products")
-    //public ResponseEntity<List<Product>> getProducts() {}
-
+    // 這邊是查詢所有商品，並且回傳 List<Product>
+    // 而且他返回是要一個 List
+    // getProducts 表示回傳多個商品
+    @GetMapping("/products") // 取的資料對應的是 Get 方法
+    public ResponseEntity<List<Product>> getProducts() {
+        // List<Product> 所有商品的 List
+        List<Product> products = productService.getProducts();
+        // 不管有沒有商品，都回傳 HTTP 200 狀態碼與商品資料。
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
 
     // 這邊是查詢單個商品
     @GetMapping("/products/{productId}") // 取的資料對應的是 Get 方法，並且使用PathVariable來取得商品的 id
@@ -80,6 +86,8 @@ public class ProductController {
         // 回傳 204 No Content 表示刪除成功，但不回傳任何資料。
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+
 }
 
 
