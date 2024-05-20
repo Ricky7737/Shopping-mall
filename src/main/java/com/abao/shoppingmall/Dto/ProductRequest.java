@@ -4,6 +4,7 @@ import com.abao.shoppingmall.constant.ProductCategory;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+// 這裡用來接住前端輸入的 .json 資料
 public class ProductRequest {
 
     @NotNull

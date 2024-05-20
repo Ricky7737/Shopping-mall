@@ -11,6 +11,8 @@ import java.sql.SQLException;
 // 這個 RowMapper 就是用來把查詢到的資料轉成 Product 物件
 public class ProductRowMapper implements RowMapper<Product> {
     @Override
+    // mapRow(第一個參數是 ResultSet 表示查詢到的資料 , 第二個參數是 rowNum 表示第幾筆資料 )
+    // ResultSet resultSet 是查詢到的資料，int i 是 rowNum
     public Product mapRow(ResultSet resultSet, int i) throws SQLException {
         // 時做裡面要做的事情
         // ResultSet 就是查詢結果集

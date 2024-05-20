@@ -25,4 +25,10 @@ public class ProductServiceImpl implements ProductService {
     public Integer createProduct(ProductRequest productRequest) {
         return productDao.createProduct(productRequest);
     }
+
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        // 回傳 ProductDao 物件的 updateProduct 方法
+        productDao.updateProduct(productId, productRequest);
+    }
 }

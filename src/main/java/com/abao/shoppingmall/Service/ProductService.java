@@ -8,4 +8,6 @@ public interface ProductService {
     Product getProductById(Integer productId);
     // 定義 crawleProduct 方法，爬取商品資訊，ProductRequest 是前端傳進來的參數
     Integer createProduct(ProductRequest productRequest);
+    // 定義 updateProduct 方法，更新商品資訊，ProductRequest 是前端傳進來的參數
+    void updateProduct(Integer productId, ProductRequest productRequest);
 }

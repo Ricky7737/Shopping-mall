@@ -9,5 +9,6 @@ public interface ProductDao {
     Product getProductById(Integer productId);
     // 定義一個 creatProduct
     Integer createProduct(ProductRequest productRequest);
-
+    // 定義一個 updateProduct，用來更新 product 表格的資料
+    void updateProduct(Integer productId, ProductRequest productRequest);
 }

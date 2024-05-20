@@ -50,4 +50,52 @@ public class ProductController {
         // 回傳 HTTP 201 狀態碼與新增的商品資料，把資料傳回去給前端
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
+
+    // 修改商品功能
+    @PutMapping("/products/{productId}") // 修改資料對應的是 PUT 方法
+    // 參數(接住URL 的 productId 數值, 商品修改後的資料 ProductRequest)
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
+                                                 @RequestBody @Valid ProductRequest productRequest) {
+        // 檢查商品是否存在
+        Product product = productService.getProductById(productId);
+        // 如果是空的，表示商品不存在，回傳 404 Not Found 狀態
+        if (product == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // 修改商品功能，參數為 productId 與 productRequest，表示指定商品然後修改商品資料。
+        productService.updateProduct(productId, productRequest);
+        // 查詢更新後的商品資料
+        Product updatedProduct = productService.getProductById(productId);
+        // 回傳 200 OK，在 body 回傳更新後的商品資料。
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
