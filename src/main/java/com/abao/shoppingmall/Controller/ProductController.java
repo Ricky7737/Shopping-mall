@@ -1,5 +1,6 @@
 package com.abao.shoppingmall.Controller;
 
+import com.abao.shoppingmall.Dto.ProductQueryParams;
 import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.ProductService;
@@ -28,10 +29,13 @@ public class ProductController {
             // 透過關鍵字搜尋商品，並且回傳 List<Product>
             @RequestParam(required = false) String search) {
 
+        // 透過 productQuertParams 物件來存放查詢的參數，並且傳入 productService 的 getProducts 方法。
+        ProductQueryParams productQuertParams = new ProductQueryParams();
+        productQuertParams.setCategory(category);
+        productQuertParams.setSearch(search);
+
         // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
-        // 把 categoty 傳入 productService 的 getProducts 方法，取得商品資料。
-        // 傳入 search 參數，表示要搜尋的關鍵字，傳進 Dao
-        List<Product> productsList = productService.getProducts(category, search);
+        List<Product> productsList = productService.getProducts(productQuertParams);
         // 不管有沒有商品，都回傳 HTTP 200 狀態碼與商品資料。
         return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }

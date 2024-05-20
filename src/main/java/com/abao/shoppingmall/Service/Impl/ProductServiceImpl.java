@@ -1,10 +1,10 @@
 package com.abao.shoppingmall.Service.Impl;
 
 import com.abao.shoppingmall.Dao.ProductDao;
+import com.abao.shoppingmall.Dto.ProductQueryParams;
 import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.ProductService;
-import com.abao.shoppingmall.constant.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override

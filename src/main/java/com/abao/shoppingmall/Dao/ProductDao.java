@@ -1,15 +1,15 @@
 package com.abao.shoppingmall.Dao;
 
+import com.abao.shoppingmall.Dto.ProductQueryParams;
 import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
-import com.abao.shoppingmall.constant.ProductCategory;
 
 import java.util.List;
 
 public interface ProductDao {
 
     // 返回類型是 List<Product>，表示全部的 product 物件
-    List<Product> getProducts(ProductCategory category, String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
     // 方反返回類型是 product
     // 這裡的 getProductById 是查詢 product 表格的 id 值，並回傳 product 物件
     Product getProductById(Integer productId);
