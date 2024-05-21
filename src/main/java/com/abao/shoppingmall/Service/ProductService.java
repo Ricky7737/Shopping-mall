@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductService {
 
+    // 計算商品數量
+    Integer countProducts(ProductQueryParams productQueryParams);
     // 定義 getProducts 方法，取得所有商品資訊
     List<Product> getProducts(ProductQueryParams productQueryParams);
     // 透過 productId 取得單個商品資訊
@@ -21,4 +23,6 @@ public interface ProductService {
 
     // 定義 deleteProductById 方法，刪除商品資訊
     void deleteProductById(Integer productId);
+
+
 }

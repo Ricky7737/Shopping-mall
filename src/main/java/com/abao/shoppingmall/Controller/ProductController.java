@@ -5,6 +5,7 @@ import com.abao.shoppingmall.Dto.ProductRequest;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.ProductService;
 import com.abao.shoppingmall.constant.ProductCategory;
+import com.abao.shoppingmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -26,7 +27,7 @@ public class ProductController {
     // 透過 List<Product> 取得查詢的多個商品
     // 這邊還要加入查詢商品分類功能，透過 @RequestParam ProductCategory category 來取得分類名稱
     @GetMapping("/products") // 取的資料對應的是 Get 方法
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             // 查詢條件
             // category 透過商品分類查詢商品
             @RequestParam(required = false) ProductCategory category,
@@ -45,19 +46,32 @@ public class ProductController {
             // offset 表示跳過多少筆數據，對應SQL 的 OFFSET 參數，這邊預設從第一筆開始，OFFSET 最小為 0
             @RequestParam(defaultValue = "0") @Min(0) Integer offset) {
 
+        /*組合查詢條件來搜尋資料，然後回傳資料存入 productList*/
         // 透過 productQuertParams 物件來存放查詢的參數，並且傳入 productService 的 getProducts 方法。
-        ProductQueryParams productQuertParams = new ProductQueryParams();
-        productQuertParams.setCategory(category);
-        productQuertParams.setSearch(search);
-        productQuertParams.setOrderBy(orderBy);
-        productQuertParams.setSort(sort);
-        productQuertParams.setLimit(limit);
-        productQuertParams.setOffset(offset);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+        productQueryParams.setOrderBy(orderBy);
+        productQueryParams.setSort(sort);
+        productQueryParams.setLimit(limit);
+        productQueryParams.setOffset(offset);
 
         // List<Product> 所有商品的 List，參數為 category，表示要取得哪個分類的商品。
-        List<Product> productsList = productService.getProducts(productQuertParams);
+        List<Product> productsList = productService.getProducts(productQueryParams);
+
+        /*以下用來存放查詢到的商品，並組成 Page 物件*/
+        // 取得 product 筆數
+        Integer total = productService.countProducts(productQueryParams);  // 取得總共有多少筆資料，後面參數為查詢時不同商品有不同筆數
+
+        // 以下用來建立 Page 物件，並把查詢到的商品放進去。
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productsList);  // 查詢到的資料放回去 Resutls 裡面
+
         // 不管有沒有商品，都回傳 HTTP 200 狀態碼與商品資料。
-        return ResponseEntity.status(HttpStatus.OK).body(productsList);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     // 這邊是查詢單個商品

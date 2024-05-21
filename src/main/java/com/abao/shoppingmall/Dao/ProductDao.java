@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductDao {
 
+    // 定義一個 countProducts，用來計算 product 表格的資料量
+    Integer countProducts(ProductQueryParams productQueryParams);
     // 返回類型是 List<Product>，表示全部的 product 物件
     List<Product> getProducts(ProductQueryParams productQueryParams);
     // 方反返回類型是 product
@@ -22,4 +24,5 @@ public interface ProductDao {
 
     // 定義一個 deleteProductById，用來刪除 product 表格的資料
     void deleteProductById(Integer productId);
+
 }
