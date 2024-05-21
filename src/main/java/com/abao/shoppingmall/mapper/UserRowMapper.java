@@ -11,7 +11,9 @@ public class UserRowMapper implements RowMapper<User> {
 
     @Override
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
+        // 建立一個 User 類別的實體
         User user = new User();
+        // 將資料庫查詢的結果對應到 User 類別的屬性上
         user.setUserId(resultSet.getInt("user_id"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));

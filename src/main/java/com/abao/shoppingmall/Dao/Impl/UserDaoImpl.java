@@ -60,9 +60,30 @@ public class UserDaoImpl implements UserDao {
         map.put("userId", userId);
 
         // 透過 UserRowMapper 將資料轉換成 User 物件，存放到 List 中
+        // query參數( sql語句, 參數map, 結果集轉換器)
         List<User> userList = namedParameterJdbcTemplate.query(sql, map, new UserRowMapper());
 
         // 取出第一筆資料
+        if (userList.size() > 0) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public User getUsersByEmail(String email) {
+
+        String sql = "SELECT user_id, email, password, created_date, last_modified_date " +
+                "FROM user WHERE email = :email";
+
+        // 建立一個 map 來存放 email
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+
+        List<User> userList = namedParameterJdbcTemplate.query(sql, map, new UserRowMapper());
+
+        // 如果有這筆資料就回傳
         if (userList.size() > 0) {
             return userList.get(0);
         } else {

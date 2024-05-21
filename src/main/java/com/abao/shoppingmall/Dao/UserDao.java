@@ -8,4 +8,7 @@ public interface UserDao {
     Integer createUser(UserRegisterRequest userRegisterRequest);
 
     User getUserById(Integer userId);
+
+    // 透過 email 查找使用者
+    User getUsersByEmail(String email);
 }
