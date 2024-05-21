@@ -31,15 +31,9 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "SELECT COUNT(*) FROM product WHERE 1=1";
 
         Map<String, Object> map = new HashMap<>();
-        if (productQueryParams.getCategory() != null) {
-            sql = sql + " AND category = :category";
-            map.put("category", productQueryParams.getCategory().name());
-        }
 
-        if (productQueryParams.getSearch() != null) {
-            sql = sql + " AND product_name LIKE :search";
-            map.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
+        // 調用共同程式 addFilterSql，加入查詢條件
+        sql = addFilterSql(sql, map, productQueryParams);
 
         // queryForObject 表示取得單一值，此處用來取得總數，所以用 Integer 型態
         Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
@@ -58,19 +52,8 @@ public class ProductDaoImpl implements ProductDao {
 
         /*---執行查詢，取得商品列表---*/
         Map<String, Object> map = new HashMap<>();  // 建立空的Map物件
-        // 如果 category 參數不是空，就加入查詢條件
-        if (productQueryParams.getCategory() != null) {
-            sql = sql + " AND category = :category"; // 這邊主要讓查詢條件拼接在 WHERE 後面
-            // category 是 Enum 型態，透過 .name() 取得字串值
-            map.put("category", productQueryParams.getCategory().name());
-        }
-
-        // 如果 search 參數不是空，就加入查詢條件
-        if (productQueryParams.getSearch() != null) {
-            sql = sql + " AND product_name LIKE :search";
-            // 將 search 加上 % 作為模糊查詢
-            map.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
+        // 調用共同程式 addFilterSql，加入查詢條件
+        sql = addFilterSql(sql, map, productQueryParams);
 
         /*---排序條件---*/
         // 這邊透過字串拼接的方式，將 order_by 和 sort 參數拼接到 SQL 語法中
@@ -180,5 +163,24 @@ public class ProductDaoImpl implements ProductDao {
         map.put("productId", productId);
 
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map));
+    }
+
+    /*將共同程式提煉出來*/
+    private String addFilterSql(String sql, Map<String, Object> map, ProductQueryParams productQueryParams) {
+        // 如果 category 參數不是空，就加入查詢條件
+        if (productQueryParams.getCategory() != null) {
+            sql = sql + " AND category = :category"; // 這邊主要讓查詢條件拼接在 WHERE 後面
+            // category 是 Enum 型態，透過 .name() 取得字串值
+            map.put("category", productQueryParams.getCategory().name());
+        }
+
+        // 如果 search 參數不是空，就加入查詢條件
+        if (productQueryParams.getSearch() != null) {
+            sql = sql + " AND product_name LIKE :search";
+            // 將 search 加上 % 作為模糊查詢
+            map.put("search", "%" + productQueryParams.getSearch() + "%");
+        }
+        // 回傳拼接後的 SQL 語法
+        return sql;
     }
 }
