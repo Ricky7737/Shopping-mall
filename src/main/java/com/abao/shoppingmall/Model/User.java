@@ -1,5 +1,8 @@
 package com.abao.shoppingmall.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class User {
@@ -17,6 +20,8 @@ public class User {
         this.userId = userId;
     }
 
+    // 讓返回前端時，Email 會顯示為 e_mail
+    @JsonProperty("e_mail")
     public String getEmail() {
         return Email;
     }
@@ -25,6 +30,8 @@ public class User {
         Email = email;
     }
 
+    // 返回前端時，Password 會被忽略掉
+    @JsonIgnore
     public String getPassword() {
         return Password;
     }
