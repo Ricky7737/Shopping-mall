@@ -1,5 +1,6 @@
 package com.abao.shoppingmall.Controller;
 
+import com.abao.shoppingmall.Dto.UserLoginRequest;
 import com.abao.shoppingmall.Dto.UserRegisterRequest;
 import com.abao.shoppingmall.Model.User;
 import com.abao.shoppingmall.Service.UserService;
@@ -27,5 +28,14 @@ public class UserContorller {
         User user = userService.getUserById(userId);
         // 回傳 User 資訊
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    // 實作登入API，對應 POST，因為帳號密碼必須透過 body 傳遞比較安全，所以不採用 GET
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        // 透過 userService 的 login 方法進行登入，返回 User 資訊
+        User user = userService.login(userLoginRequest);
+        // 登入成功得時候，回傳 200 OK 狀態碼，並回傳 User 資訊
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
