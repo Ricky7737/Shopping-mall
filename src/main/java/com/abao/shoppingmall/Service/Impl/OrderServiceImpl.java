@@ -5,6 +5,7 @@ import com.abao.shoppingmall.Dao.ProductDao;
 import com.abao.shoppingmall.Dto.BuyItem;
 import com.abao.shoppingmall.Dto.CreateOderRequest;
 import com.abao.shoppingmall.Model.OrderItem;
+import com.abao.shoppingmall.Model.OrderTotal;
 import com.abao.shoppingmall.Model.Product;
 import com.abao.shoppingmall.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,18 @@ public class OrderServiceImpl implements OrderService {
         orderDao.creatOrderItems(orderId, orederItemList); // 在 order_item 去建立訂單下了那些商品
 
         return orderId;
+    }
+
+    @Override
+    public OrderTotal getOrderById(Integer orderId) {
+        // 取得 order_total 表的訂單資訊
+        OrderTotal orderTotal = orderDao.getOrderById(orderId);
+        // 取得 order_item 表的訂單商品資訊
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        // 合併上面兩筆數據
+        orderTotal.setOrderItemList(orderItemList);
+
+        return orderTotal;
     }
 }

@@ -1,14 +1,18 @@
 package com.abao.shoppingmall.Model;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 // 對應資料庫 order_total 表格
-public class OrederTotal {
+public class OrderTotal {
     private Integer orderId;
     private Integer userId;
     private Integer totalAmount;
     private Date createdDate;
     private Date lastModifiedDate;
+
+    private List<OrderItem> orderItemList;
 
     public Integer getOrderId() {
         return orderId;
@@ -48,5 +52,13 @@ public class OrederTotal {
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 }

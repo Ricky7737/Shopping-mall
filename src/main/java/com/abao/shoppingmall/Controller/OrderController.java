@@ -1,9 +1,11 @@
 package com.abao.shoppingmall.Controller;
 
 import com.abao.shoppingmall.Dto.CreateOderRequest;
+import com.abao.shoppingmall.Model.OrderTotal;
 import com.abao.shoppingmall.Service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,10 @@ public class OrderController {
                                          @RequestBody @Valid CreateOderRequest createOderRequest) {
         // orederId 就是資料庫自動創建的 id
         Integer orderId = OrderService.createOrder(userId, createOderRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+
+        // 回傳訂單
+        OrderTotal orderTotal = OrderService.getOrderById(orderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderTotal);
     }
 }

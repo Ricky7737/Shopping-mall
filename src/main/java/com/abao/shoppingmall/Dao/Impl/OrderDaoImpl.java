@@ -2,7 +2,11 @@ package com.abao.shoppingmall.Dao.Impl;
 
 import com.abao.shoppingmall.Dao.OrderDao;
 import com.abao.shoppingmall.Model.OrderItem;
+import com.abao.shoppingmall.Model.OrderTotal;
+import com.abao.shoppingmall.mapper.OrderItemRowMapper;
+import com.abao.shoppingmall.mapper.OrderRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -71,5 +75,46 @@ public class OrderDaoImpl implements OrderDao {
         }
 
         namedParameterJdbcTemplate.batchUpdate(sql, batchArgs);
+    }
+    
+    
+    // 取得 Order_total 表中指定 id 的訂單資訊
+    @Override
+    public OrderTotal getOrderById(Integer orderId) {
+        
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date" +
+                " FROM order_Total WHERE order_id = :order_id";
+        
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("order_id", orderId);
+
+        // 把取得的數據轉成一個 List
+        List<OrderTotal> orderTotalList = namedParameterJdbcTemplate.query(sql, paramMap, new OrderRowMapper());
+        
+        // 判斷是否有查詢到資料
+        if(orderTotalList.size()>0){
+            return orderTotalList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    // 取得 Order_item 表中指定訂單 id 的商品資訊
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+
+        String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url" +
+                " FROM order_item as oi" +
+                " LEFT JOIN product as p ON oi.product_id = p.product_id" +
+                " WHERE oi.order_id = :order_id";
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("order_id", orderId);
+
+        // 把取得的數據轉成一個 List
+        List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, paramMap, new OrderItemRowMapper());
+
+        // 回傳查詢到的商品資訊
+        return orderItemList;
     }
 }

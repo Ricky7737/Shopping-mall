@@ -1,6 +1,7 @@
 package com.abao.shoppingmall.Dao;
 
 import com.abao.shoppingmall.Model.OrderItem;
+import com.abao.shoppingmall.Model.OrderTotal;
 
 import java.util.List;
 
@@ -8,4 +9,8 @@ public interface OrderDao {
     Integer createOrder(Integer userId, int totalAmount);
     // 插入數據到 order_item 表中
     void creatOrderItems(Integer orderId, List<OrderItem> orederItemList);
+    // 取得 Order_Total 表中某個 order 的資料
+    OrderTotal getOrderById(Integer orderId);
+    // 取得 Order_Item 表中某個 order 的所有商品資料
+    List<OrderItem> getOrderItemsByOrderId(Integer orderId);
 }
