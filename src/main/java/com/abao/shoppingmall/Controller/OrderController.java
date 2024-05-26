@@ -22,10 +22,9 @@ public class OrderController {
                                          @RequestBody @Valid CreateOderRequest createOderRequest) {
         // orederId 就是資料庫自動創建的 id
         Integer orderId = OrderService.createOrder(userId, createOderRequest);
-
-        // 回傳訂單
+        // 透過訂單id 取得訂單總結資訊
         OrderTotal orderTotal = OrderService.getOrderById(orderId);
-
+        // 回傳訂單總結資訊
         return ResponseEntity.status(HttpStatus.CREATED).body(orderTotal);
     }
 }

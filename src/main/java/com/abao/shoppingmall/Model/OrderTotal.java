@@ -11,7 +11,7 @@ public class OrderTotal {
     private Integer totalAmount;
     private Date createdDate;
     private Date lastModifiedDate;
-
+    // 對應 order_item 表格，新增 orderItemList 屬性
     private List<OrderItem> orderItemList;
 
     public Integer getOrderId() {

@@ -6,7 +6,8 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderRowMapper implements RowMapper<OrderTotal> {
+// 讀取 OrderTotal 資料表的資料，並將其轉換成 OrderTotal 物件
+public class OrderTotalRowMapper implements RowMapper<OrderTotal> {
 
 
     @Override

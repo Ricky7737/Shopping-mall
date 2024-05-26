@@ -4,16 +4,14 @@ import com.abao.shoppingmall.Dao.OrderDao;
 import com.abao.shoppingmall.Model.OrderItem;
 import com.abao.shoppingmall.Model.OrderTotal;
 import com.abao.shoppingmall.mapper.OrderItemRowMapper;
-import com.abao.shoppingmall.mapper.OrderRowMapper;
+import com.abao.shoppingmall.mapper.OrderTotalRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +87,7 @@ public class OrderDaoImpl implements OrderDao {
         paramMap.put("order_id", orderId);
 
         // 把取得的數據轉成一個 List
-        List<OrderTotal> orderTotalList = namedParameterJdbcTemplate.query(sql, paramMap, new OrderRowMapper());
+        List<OrderTotal> orderTotalList = namedParameterJdbcTemplate.query(sql, paramMap, new OrderTotalRowMapper());
         
         // 判斷是否有查詢到資料
         if(orderTotalList.size()>0){
@@ -103,6 +101,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
 
+        // 下訂單後，取得除了每一筆訂單的資訊外，還要加入訂單對應的商品名稱、圖片資訊
         String sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.amount, p.product_name, p.image_url" +
                 " FROM order_item as oi" +
                 " LEFT JOIN product as p ON oi.product_id = p.product_id" +

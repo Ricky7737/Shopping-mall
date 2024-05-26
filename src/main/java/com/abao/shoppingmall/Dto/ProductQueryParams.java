@@ -3,7 +3,7 @@ package com.abao.shoppingmall.Dto;
 import com.abao.shoppingmall.constant.ProductCategory;
 
 /*
-    用來統一管理查詢商品的參數
+    用來統一管理查詢商品的 API參數
     如果查詢條件有很多需要一一從 Controller 傳遞到 Service 再到 Dao，就可以方便管理變數
     可以省略修改 Service ，Dao 只要對應的條件微調就好
     這樣就可以提升程式的可讀性，提升維護性

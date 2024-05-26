@@ -42,10 +42,9 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     // 取得所有商品
-    // WHERE 1=1 表示不篩選任何條件，可以拼接多個條件
     public List<Product> getProducts(ProductQueryParams productQueryParams) {
 
-
+        // WHERE 1=1 表示不篩選任何條件，可以拼接多個條件
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, " +
                 "created_date, last_modified_date " +
                 "FROM product WHERE 1=1";
@@ -111,9 +110,8 @@ public class ProductDaoImpl implements ProductDao {
         map.put("description", productRequest.getDescription());
 
         // 添加時間
-        Date now = new Date();
-        map.put("createdDate", now);
-        map.put("lastModifiedDate", now);
+        map.put("createdDate", new Date());
+        map.put("lastModifiedDate", new Date());
 
         // 使用 KeyHolder 自動生成產生的產品 ID，存入資料庫
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -148,13 +146,30 @@ public class ProductDaoImpl implements ProductDao {
         map.put("description", productRequest.getDescription());
 
         // 更新時間，而且是最後時間
-        Date now = new Date();
-        map.put("lastModifiedDate", now);
+        map.put("lastModifiedDate", new Date());
 
         // 執行更新
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map));
     }
 
+    // 更新商品庫存
+    @Override
+    public void updateStock(Integer productId, Integer stock) {
+
+        String sql = "UPDATE product SET stock = :stock, last_modified_date = :lastModifiedDate " +
+                "WHERE product_id = :productId";
+        // 置入更新後的資料庫值
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+        map.put("stock", stock);
+        map.put("lastModifiedDate", new Date());
+
+        // 更新庫存
+        namedParameterJdbcTemplate.update(sql, map);
+    }
+
+
+    // 刪除商品
     @Override
     public void deleteProductById(Integer productId) {
         String sql = "DELETE FROM product WHERE product_id = :productId";
@@ -165,7 +180,8 @@ public class ProductDaoImpl implements ProductDao {
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map));
     }
 
-    /*將共同程式提煉出來*/
+
+    /*將 countProducts getProducts共同程式提煉出來*/
     private String addFilterSql(String sql, Map<String, Object> map, ProductQueryParams productQueryParams) {
         // 如果 category 參數不是空，就加入查詢條件
         if (productQueryParams.getCategory() != null) {
