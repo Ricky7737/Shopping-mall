@@ -5,6 +5,7 @@ import com.abao.shoppingmall.Dao.ProductDao;
 import com.abao.shoppingmall.Dao.UserDao;
 import com.abao.shoppingmall.Dto.BuyItem;
 import com.abao.shoppingmall.Dto.CreateOderRequest;
+import com.abao.shoppingmall.Dto.OrderQueryParam;
 import com.abao.shoppingmall.Model.OrderItem;
 import com.abao.shoppingmall.Model.OrderTotal;
 import com.abao.shoppingmall.Model.Product;
@@ -36,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserDao userDao;
 
+    // 透過 userId 與 createOderRequest 來創建訂單
     @Transactional // 訂單的功能，需要 transactional 來保證資料一致性，避免出現狀況無法復原數據
     @Override
     public Integer createOrder(Integer userId, CreateOderRequest createOderRequest) {
@@ -99,6 +101,7 @@ public class OrderServiceImpl implements OrderService {
         return orderId;
     }
 
+    // 透過訂單 id 取得訂單資訊
     @Override
     public OrderTotal getOrderById(Integer orderId) {
         // 取得 order_total 表的訂單資訊
@@ -109,5 +112,25 @@ public class OrderServiceImpl implements OrderService {
         orderTotal.setOrderItemList(orderItemList);
         // 回傳 OrderTotal 物件，包含訂單資訊和訂單商品資訊
         return orderTotal;
+    }
+
+    // 透過 OrderQueryParam 裡面得參數取得使用者訂單總數量
+    @Override
+    public Integer getOrdersCount(OrderQueryParam orderQueryParam) {
+        return orderDao.countOrders(orderQueryParam);
+    }
+
+    // 透過 OrderQueryParam 裡面得參數取得使用者訂單資訊
+    @Override
+    public List<OrderTotal> getOrders(OrderQueryParam orderQueryParam) {
+
+        List<OrderTotal> orderTotalList = orderDao.getOrders(orderQueryParam);
+        // 透過 for 迴圈，取得每一筆訂單的訂單商品資訊，並合併到 OrderTotal 物件中
+        for(OrderTotal orderTotal : orderTotalList){
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderTotal.getOrderId());
+            orderTotal.setOrderItemList(orderItemList);
+        }
+
+        return orderTotalList;
     }
 }

@@ -1,6 +1,7 @@
 package com.abao.shoppingmall.Dao.Impl;
 
 import com.abao.shoppingmall.Dao.OrderDao;
+import com.abao.shoppingmall.Dto.OrderQueryParam;
 import com.abao.shoppingmall.Model.OrderItem;
 import com.abao.shoppingmall.Model.OrderTotal;
 import com.abao.shoppingmall.mapper.OrderItemRowMapper;
@@ -115,5 +116,61 @@ public class OrderDaoImpl implements OrderDao {
 
         // 回傳查詢到的商品資訊
         return orderItemList;
+    }
+
+    // 透過 OrderQueryParam 物件查詢 order 筆數
+    @Override
+    public Integer countOrders(OrderQueryParam orderQueryParam) {
+        // 這個語法表示要用 SQL 語法來寫 count 函式
+        String sql = "SELECT COUNT(*) FROM order_Total WHERE 1=1";
+
+        Map<String, Object> paramMap = new HashMap<>();
+
+        // 加入查詢條件
+        sql = addFliteringSql(sql, paramMap, orderQueryParam);
+
+        // 執行查詢
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, paramMap, Integer.class);
+
+        return total;
+    }
+
+    // 透過 OrderQueryParam 物件查詢 order 資料
+    @Override
+    public List<OrderTotal> getOrders(OrderQueryParam orderQueryParam) {
+        // 查詢語法
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date" +
+                " FROM order_Total WHERE 1=1";
+
+        Map<String, Object> paramMap = new HashMap<>();
+
+        // 查詢條件
+        sql = addFliteringSql(sql, paramMap, orderQueryParam);
+
+        // 排序
+        sql = sql + " ORDER BY created_date";
+
+        // 分頁
+        sql = sql + " LIMIT :limit OFFSET :offset";
+
+        // 透過 map 將 limit 與 offset 加入 sql 語法中
+        paramMap.put("limit", orderQueryParam.getLimit());
+        paramMap.put("offset", orderQueryParam.getOffset());
+
+        // 執行查詢
+        List<OrderTotal> orderTotalList = namedParameterJdbcTemplate.query(sql, paramMap, new OrderTotalRowMapper());
+
+        // 回傳查詢到的訂單資訊
+        return orderTotalList;
+    }
+
+    // 從上面 getOders() 與 countOrders() 函式中，把共同的程式提煉出來
+    private String addFliteringSql(String sql, Map<String, Object> paramMap, OrderQueryParam orderQueryParam) {
+        // 先判斷 userId 是否為 null
+        if (orderQueryParam.getUserId()!= null) {
+            sql += " AND user_id = :user_id";
+            paramMap.put("user_id", orderQueryParam.getUserId());
+        }
+        return sql;
     }
 }

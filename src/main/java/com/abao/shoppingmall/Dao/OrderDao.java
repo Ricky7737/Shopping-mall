@@ -1,5 +1,6 @@
 package com.abao.shoppingmall.Dao;
 
+import com.abao.shoppingmall.Dto.OrderQueryParam;
 import com.abao.shoppingmall.Model.OrderItem;
 import com.abao.shoppingmall.Model.OrderTotal;
 
@@ -13,4 +14,9 @@ public interface OrderDao {
     OrderTotal getOrderById(Integer orderId);
     // 取得 Order_Item 表中某個 order 的所有商品資料
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    // 透過 OrderQueryParam 物件查詢 order 筆數
+    Integer countOrders(OrderQueryParam orderQueryParam);
+    // 透過 OrderQueryParam 物件查詢 order 資料
+    List<OrderTotal> getOrders(OrderQueryParam orderQueryParam);
 }
