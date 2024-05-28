@@ -66,4 +66,15 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
+
+    // 登入後，刪除自己的一筆訂單
+    // URL 有兩個參數，userId 與 orderId
+    @DeleteMapping("/users/{userId}/orders/{orderId}")
+    // ResponseEntity<Void> 代表成功刪除訂單，但不回傳任何資料
+    public ResponseEntity<Void> deleteOrder(@PathVariable Integer userId, @PathVariable Integer orderId) {
+        // 刪除訂單
+        OrderService.deleteOrder(userId, orderId);
+        // 回傳成功訊息
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

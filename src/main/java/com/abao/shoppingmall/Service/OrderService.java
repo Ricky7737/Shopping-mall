@@ -16,4 +16,6 @@ public interface OrderService {
     Integer getOrdersCount(OrderQueryParam orderQueryParam);
     // 取得多筆訂單
     List<OrderTotal> getOrders(OrderQueryParam orderQueryParam);
+    // 刪除訂單
+    void deleteOrder(Integer userId, Integer orderId);
 }

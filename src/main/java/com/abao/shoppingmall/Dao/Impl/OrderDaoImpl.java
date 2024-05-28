@@ -164,6 +164,21 @@ public class OrderDaoImpl implements OrderDao {
         return orderTotalList;
     }
 
+    @Override
+    public void deleteOrder(Integer orderId) {
+
+        // 刪除訂單的 SQL 語法
+        String sql = "DELETE order_total, order_item " +
+                "FROM  order_item " +
+                "JOIN order_total ON order_total.order_id = order_item.order_id " +
+                "WHERE order_item.order_id = :order_id";
+
+        // 執行刪除
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("order_id", orderId));
+
+    }
+
+
     // 從上面 getOders() 與 countOrders() 函式中，把共同的程式提煉出來
     private String addFliteringSql(String sql, Map<String, Object> paramMap, OrderQueryParam orderQueryParam) {
         // 先判斷 userId 是否為 null

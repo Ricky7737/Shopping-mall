@@ -19,4 +19,7 @@ public interface OrderDao {
     Integer countOrders(OrderQueryParam orderQueryParam);
     // 透過 OrderQueryParam 物件查詢 order 資料
     List<OrderTotal> getOrders(OrderQueryParam orderQueryParam);
+
+    // 刪除 order 資料
+    void deleteOrder(Integer orderId);
 }

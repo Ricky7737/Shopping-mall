@@ -133,4 +133,41 @@ public class OrderServiceImpl implements OrderService {
 
         return orderTotalList;
     }
+
+    // 刪除訂單的部分，因為一次異動到 orderItem、orderTotal 與 product 三個 Table，所以要小心使用
+    @Transactional
+    @Override
+    public void deleteOrder(Integer userId, Integer orderId) {
+        // 先檢查使用者 與 訂單是否存在
+        User user = userDao.getUserById(userId);
+        if(user==null){
+            // 使用 log 來記��警告訊息
+            log.warn("使用者{}不存在，無法刪除訂單", userId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        // 檢查訂單編號是否存在
+        OrderTotal orderTotal = orderDao.getOrderById(orderId);
+        if(orderTotal==null){
+            // 使用 log 來記錄警告訊息
+            log.warn("訂單{}不存在，無法刪除訂單", orderId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        // 另外 product 下單時被扣除庫存，先在也要恢復庫存數量
+        // 先透過 List 取得 order_item 對應商品的資訊
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+        // 再透過 for 迴圈，將商品庫存數量加回來
+        for(OrderItem orderItem : orderItemList){
+            // 取得商品 id
+            Integer productId = orderItem.getProductId();
+            // 取得商品庫存數量
+            Product product = productDao.getProductById(productId);
+            // 將庫存數量加回來， product.getStock() 取得商品庫存數量，orderItem.getQuantity() 取得使用者購買數量
+            productDao.updateStock(productId, product.getStock() + orderItem.getQuantity());
+        }
+
+        // 把訂單數量添加回庫存後，刪除訂單
+        orderDao.deleteOrder(orderId);
+    }
 }
