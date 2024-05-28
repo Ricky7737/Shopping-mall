@@ -141,18 +141,21 @@ public class OrderServiceImpl implements OrderService {
         // 先檢查使用者 與 訂單是否存在
         User user = userDao.getUserById(userId);
         if(user==null){
-            // 使用 log 來記��警告訊息
+            // 使用 log 來記錄警告訊息
             log.warn("使用者{}不存在，無法刪除訂單", userId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        // 檢查訂單編號是否存在
+        // 檢查訂單是否在這個使用者名下
+        // 取得 order_total 表的訂單資訊
         OrderTotal orderTotal = orderDao.getOrderById(orderId);
-        if(orderTotal==null){
+        // 如果訂單不存在，或者訂單不屬於這個使用者，就回傳 BAD_REQUEST 狀態
+        if(orderTotal==null || orderTotal.getUserId() != userId){
             // 使用 log 來記錄警告訊息
-            log.warn("訂單{}不存在，無法刪除訂單", orderId);
+            log.warn("使用者{}無權刪除訂單{}", userId, orderId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
 
         // 另外 product 下單時被扣除庫存，先在也要恢復庫存數量
         // 先透過 List 取得 order_item 對應商品的資訊
