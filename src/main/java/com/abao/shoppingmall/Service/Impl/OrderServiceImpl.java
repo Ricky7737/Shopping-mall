@@ -148,6 +148,7 @@ public class OrderServiceImpl implements OrderService {
 
         // 檢查訂單是否在這個使用者名下
         // 取得 order_total 表的訂單資訊
+        // 不過正常來說，要登陸後才會有 userId，也只會看到自己的訂單，所以不會有誤刪別人資料的問題
         OrderTotal orderTotal = orderDao.getOrderById(orderId);
         // 如果訂單不存在，或者訂單不屬於這個使用者，就回傳 BAD_REQUEST 狀態
         if(orderTotal==null || orderTotal.getUserId() != userId){
