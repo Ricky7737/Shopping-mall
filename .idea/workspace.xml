@@ -1,7 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3cdcc99-b566-4292-9aa8-cacd95028d86" name="Changes" comment="" />
+    <list default="true" id="e3cdcc99-b566-4292-9aa8-cacd95028d86" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Controller/UserContorller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/Impl/OrderDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/Impl/ProductDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/Impl/UserDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/OrderDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/ProductDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/BuyItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/CreateOderRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/OrderQueryParam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/ProductQueryParams.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/ProductRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/UserLoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/UserRegisterRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Dto/檔案說明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Model/OrderItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Model/OrderTotal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/Impl/OrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/Impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/Impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/Service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/ShoppingmallApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/constant/ProductCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/constant/檔案說明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/mapper/OrderItemRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/mapper/OrderTotalRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/mapper/ProductRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/mapper/UserRowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/util/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/abao/shoppingmall/util/資料夾說明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/檔案說明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/abao/shoppingmall/ShoppingmallApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/功能成果展示/1.商品功能.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/功能成果展示/2.帳號註冊與登入功能.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/功能成果展示/3.訂單功能.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/功能成果展示/4.查詢訂單.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/實作過程細節筆記/商品功能/1.查詢條件.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,23 +66,30 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ricky7737"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ricky7737&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ricky7737/Shopping-mall.git",
-    "accountId": "80a8ef2e-6ea2-4d30-bcdf-fb9595ee4f2f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ricky7737/Shopping-mall.git&quot;,
+    &quot;accountId&quot;: &quot;80a8ef2e-6ea2-4d30-bcdf-fb9595ee4f2f&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/README.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2gLnlw2M1iyKqueODKj83zLMqMt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -33,13 +97,24 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Java學習/Shopping-mall",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="ShoppingmallApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="shopping-mall" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.abao.shoppingmall.ShoppingmallApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -62,5 +137,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>
